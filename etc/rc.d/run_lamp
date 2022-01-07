@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# PROVIDE: run_lamp
+# REQUIRE:
+# BEFORE:
+# KEYWORD:
+
+. /etc/rc.subr
+
+name="run_lamp"
+rcvar=run_lamp_enable
+start_cmd="${name}_start"
+stop_cmd=":"
+
+load_rc_config $name
+: ${run_lamp_enable:=no}
+: ${run_lamp_msg="Starting run_lamp."}
+
+run_lamp_start()
+{
+	echo "$run_lamp_msg"
+	# Don't run a shell script that loops forever or boot will hang.
+	/usr/local/bin/${name}.sh
+}
+
+run_rc_command "$1"
